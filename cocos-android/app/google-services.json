@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "973225000031",
+    "project_id": "lucky-winner-d5957",
+    "storage_bucket": "lucky-winner-d5957.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973225000031:android:58adbcf59de7b107a1efea",
+        "android_client_info": {
+          "package_name": "luckywinner.website"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973225000031-au2ktjr242b0ujmn1rhuhu2rer4kbofn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "luckywinner.website",
+            "certificate_hash": "0acf32686fa4e536674037fc9adf49b3d54b7bfc"
+          }
+        },
+        {
+          "client_id": "973225000031-n4ud2nh0j2sf8lno4lmqhmr626evauoh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUs8Z0me5Fr7ItbAVGI5UeI9h0MIiyrs0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973225000031-n4ud2nh0j2sf8lno4lmqhmr626evauoh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

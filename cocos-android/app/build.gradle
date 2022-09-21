@@ -1,0 +1,179 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'walle'
+
+android {
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
+    buildToolsVersion PROP_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId PACKAGE_NAME
+        minSdkVersion PROP_MIN_SDK_VERSION
+        targetSdkVersion PROP_TARGET_SDK_VERSION
+        versionCode VERSION_CODE.toInteger()
+        versionName VERSION_NAME
+        resValue "string", "app_name", APP_NAME
+
+        externalNativeBuild {
+            ndkBuild {
+                if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+                    // skip the NDK Build step if PROP_NDK_MODE is none
+                    targets 'cocos2djs'
+                    arguments 'NDK_TOOLCHAIN_VERSION=clang'
+
+                    def module_paths = [project.file(COCOS2D_X_PATH),
+                                        project.file(COCOS2D_X_PATH + "/cocos"),
+                                        project.file(COCOS2D_X_PATH + "/external")]
+                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+
+                    arguments '-j' + Runtime.runtime.availableProcessors()
+                    abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+                }
+            }
+        }
+
+        flavorDimensions "versionCode"
+    }
+
+    productFlavors {
+        BW {
+            applicationId = PACKAGE_NAME
+//            manifestPlaceholders = [CHANNEL_VALUE: "official"]
+        }
+    }
+
+    sourceSets.main {
+        java.srcDirs "../src", "src"
+        res.srcDirs "../res", 'res'
+        jniLibs.srcDirs "../libs", 'libs'
+        manifest.srcFile "AndroidManifest.xml"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+                // skip the NDK Build step if PROP_NDK_MODE is none
+                path "jni/Android.mk"
+            }
+        }
+    }
+
+    signingConfigs {
+        debug {
+
+        }
+        release {
+            storeFile file('./../bw.keystore')
+            storePassword 'rummyfanle'
+            keyAlias 'BW'
+            keyPassword 'rummyfanle'
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
+
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
+                }
+            }
+        }
+
+        debug {
+            minifyEnabled false
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            signingConfig signingConfigs.debug
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
+                }
+            }
+        }
+    }
+    viewBinding {
+        enabled true
+    }
+}
+
+android.applicationVariants.all { variant ->
+    def debugDir = variant.dirName.replace("/d", "D")
+    def releaseDir = variant.dirName.replace("/r", "R")
+
+    println(variant.dirName)
+    println(debugDir)
+    println(releaseDir)
+
+    // delete previous files first
+    delete "${buildDir}/intermediates/merged_assets/${debugDir}"
+    delete "${buildDir}/intermediates/merged_assets/${releaseDir}"
+
+    variant.mergeAssetsProvider.get().doLast{
+        def sourceDir = COCOS_RESOURCE_EXPORT_PATH
+        def mianjsDir = COCOS_RESOURCE_MAINJS_PATH
+        copy {
+            from "${sourceDir}/assets"
+            into "${outputDir}/assets"
+            into outputDir.dir("assets")
+        }
+
+        copy {
+            from "${sourceDir}/src"
+            into "${outputDir}/src"
+            into outputDir.dir("src")
+        }
+
+        copy {
+            from "${sourceDir}/jsb-adapter"
+            into "${outputDir}/jsb-adapter"
+            into outputDir.dir("jsb-adapter")
+        }
+
+        copy {
+            from "${mianjsDir}/main.js"
+            from "${sourceDir}/project.json"
+            into outputDir
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: '../libs', include: ['*.jar','*.aar'])
+    implementation 'androidx.core:core:1.2.0'
+    implementation fileTree(dir: COCOS2D_X_PATH + "/cocos/platform/android/java/libs", include: ['*.jar'])
+    implementation project(':libcocos2dx')
+    implementation project(':libAppsflyer')
+    implementation project(':libFacebook')
+    implementation 'com.facebook.android:facebook-share:latest.release'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.meituan.android.walle:library:1.1.7'
+    //implementation 'com.tencent.bugly:crashreport:latest.release'
+}

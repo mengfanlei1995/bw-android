@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="btn_txt_install" translatable="false">Install</string>
+    <string name="btn_txt_update" translatable="false">Update</string>
+    <string name="btn_txt_continue" translatable="false">Continue</string>
+    <string name="btn_txt_downloading" translatable="false">Downloading</string>
+    <string name="background_downloading" translatable="false">downloading</string>
+</resources>

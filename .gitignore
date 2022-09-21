@@ -1,0 +1,26 @@
+/cocos-android/app/mapping.txt
+/cocos-android/app/seeds.txt
+/cocos-android/app/unused.txt
+/cocos-android/.gradle/
+/cocos-android/gradle.properties
+/cocos-android/local.properties
+.DS_Store
+/cocos-android/build
+/cocos-android/captures
+*.cxx/
+/cocos-android/app/task\ \'\:GameApp\:mergeAfDebugAssets\'\ property\ \'outputDir\'/
+/cocos-android/app/task\ \'\:GameApp\:mergeReleaseAssets\'\ property\ \'outputDir\'/
+/cocos-android/app/task\ \'\_GameApp\:mergeReleaseAssets\'\ property\ \'outputDir\'/
+/cocos-android/app/huihuang/
+/cocos-android/app/startio/
+/cocos-android/app/release/
+/cocos-android/app/BW/
+/cocos-android/app/xunlei/
+/cocos-android/app/coinads/
+/cocos-android/app/af/
+/cocos-android/app/googleplay/
+/cocos-android/.idea/
+/cocos-android/app/.externalNativeBuild/
+/cocos-android/libCommon/build/
+/cocos-android/app/gen/
+/cocos-android/app/BW/
