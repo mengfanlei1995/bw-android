@@ -2,8 +2,6 @@
 /cocos-android/app/seeds.txt
 /cocos-android/app/unused.txt
 /cocos-android/.gradle/
-/cocos-android/gradle.properties
-/cocos-android/local.properties
 .DS_Store
 /cocos-android/build
 /cocos-android/captures
