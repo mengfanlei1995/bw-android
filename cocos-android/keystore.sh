@@ -1,0 +1,1 @@
+keytool -genkey -keyalg RSA -keysize 2048 -validity 36500 -keystore goldendragonslots.keystore -storepass goldendragonslots -alias goldendragonslots -keypass goldendragonslots -dname CN=goldendragonslots,OU=goldendragonslots,O=goldendragonslots,L=goldendragonslots,S=goldendragonslots,C=goldendragonslots
