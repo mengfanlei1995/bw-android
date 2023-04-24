@@ -63,15 +63,15 @@ public class AppActivity extends Cocos2dxActivity {
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            String intentAction = intent.getAction();
-            if (Intent.ACTION_VIEW.equals(intentAction)) {
-                Uri intentData = intent.getData();
-                String json = intentData.getQueryParameter("json");
-                //Log.e("AppActivity", "jswrapper: initIntentData: " + json);
-            }
-        }
+//        Intent intent = getIntent();
+//        if (intent != null) {
+//            String intentAction = intent.getAction();
+//            if (Intent.ACTION_VIEW.equals(intentAction)) {
+//                Uri intentData = intent.getData();
+//                String json = intentData.getQueryParameter("json");
+//                //Log.e("AppActivity", "jswrapper: initIntentData: " + json);
+//            }
+//        }
 
     }
 
@@ -179,30 +179,32 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitBy2Click();
+//            exitBy2Click();
+            commonEvalString("onKeyDownEvent");
         }
         return false;
     }
 
-    private static boolean isExit = false;
 
-    private void exitBy2Click() {
-        Timer tExit = null;
-        if (isExit == false) {
-            isExit = true;    //准备退出
-            Toast.makeText(this, "Operate again within 2s to exit the program.", Toast.LENGTH_SHORT).show();
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-
-                @Override
-                public void run() {
-                    // TODO Auto-generated method stub
-                    isExit = false;
-                }
-            }, 2000);
-        } else {
-            finish();
-            System.exit(0);
-        }
-    }
+//    private static boolean isExit = false;
+//
+//    private void exitBy2Click() {
+//        Timer tExit = null;
+//        if (isExit == false) {
+//            isExit = true;    //准备退出
+//            Toast.makeText(this, "Operate again within 2s to exit the program.", Toast.LENGTH_SHORT).show();
+//            tExit = new Timer();
+//            tExit.schedule(new TimerTask() {
+//
+//                @Override
+//                public void run() {
+//                    // TODO Auto-generated method stub
+//                    isExit = false;
+//                }
+//            }, 2000);
+//        } else {
+//            finish();
+//            System.exit(0);
+//        }
+//    }
 }

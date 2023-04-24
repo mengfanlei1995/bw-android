@@ -47,7 +47,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -63,10 +68,11 @@ import static com.bw.game.bridge.CommonBridge.commonEvalStringParam;
  * @author GengTao
  * @date 2020/1/16
  * @description
- */ 
+ */
 public class PhoneUtil {
-    
+
     private static Context context;
+
     public static void init(Context ctx) {
         context = ctx.getApplicationContext();
     }
@@ -81,7 +87,7 @@ public class PhoneUtil {
                 // 当全屏顶部显示黑边时，getDisplayCutout()返回为null
                 DisplayCutout displayCutout = windowInsets.getDisplayCutout();
 
-                if(displayCutout != null) {
+                if (displayCutout != null) {
                     //通过判断是否存在rects来确定是否刘海屏手机
                     List<Rect> rects = displayCutout.getBoundingRects();
                     if (rects != null && rects.size() > 0) {
@@ -98,6 +104,7 @@ public class PhoneUtil {
         }
         return isPieScreen;
     }
+
     /**
      * 检测GPS、位置权限是否开启
      */
@@ -105,7 +112,7 @@ public class PhoneUtil {
         Activity activity = ActivityManager.getInstance().getCocosActivity();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!PermissionHelper.isLocServiceEnable(activity)) {
-                commonEvalStringParam("checkGPSContacts","1");
+                commonEvalStringParam("checkGPSContacts", "1");
                 return;
             }
             LocationUtils.requestLocation(activity);
@@ -116,8 +123,8 @@ public class PhoneUtil {
      * 拉起设置 type 1 定位 2 权限
      */
     public static void pullUpSet(String type) {
-       // Log.d("PhoneUtil", "jswrapper: JS: pullUpSet - " + type);
-        if(type.equals("1")){
+        // Log.d("PhoneUtil", "jswrapper: JS: pullUpSet - " + type);
+        if (type.equals("1")) {
             //Log.d("PhoneUtil", "jswrapper: JS: pullUpSet - " + 1);
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -132,10 +139,10 @@ public class PhoneUtil {
                     e.printStackTrace();
                 }
             }
-        }else if(type.equals("2")){
+        } else if (type.equals("2")) {
             //Log.d("PhoneUtil", "jswrapper: JS: pullUpSet - " + 2);
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" +  ActivityManager.getInstance().getCocosActivity().getPackageName()));
+            intent.setData(Uri.parse("package:" + ActivityManager.getInstance().getCocosActivity().getPackageName()));
             ActivityManager.getInstance().getCocosActivity().startActivity(intent);
         }
     }
@@ -176,11 +183,12 @@ public class PhoneUtil {
             reportJson.put("location", getLocation());
             reportJson.put("network_type", getAPNType());
             reportJson.put("access", getAPNType());
-            reportJson.put("carrier", getProvider());
+//            reportJson.put("carrier", getProvider());
             reportJson.put("os_language", getLanguage());
             reportJson.put("timezone", getTimeZone());
             reportJson.put("sim_id", getSimId());
             reportJson.put("imei", getIMEI());
+//            reportJson.put("ipAddress", getIpAddress());
             //Log.d("PhoneUtil", "jswrapper: JS :  imei   " + getIMEI());
         } catch (Exception e) {
             //Log.d("PhoneUtil", "jswrapper: JS :  Exception" + e.toString());
@@ -190,8 +198,30 @@ public class PhoneUtil {
         return reportJson;
     }
 
+    public static String getIpAddress() {
+        String ipAddress = "";
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+                while (inetAddresses.hasMoreElements()) {
+                    InetAddress inetAddress = inetAddresses.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        ipAddress = inetAddress.getHostAddress();
+                        Log.d("IP Address", ipAddress);
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return ipAddress;
+    }
+
     /**
      * 获取状态栏高度
+     *
      * @return
      */
     public static int getStatusBarHeight() {
@@ -210,6 +240,7 @@ public class PhoneUtil {
 
     /**
      * 获取渠道名
+     *
      * @return 如果没有获取成功，那么返回值为空
      */
     public static String getChannelName() {
@@ -262,6 +293,7 @@ public class PhoneUtil {
 
     /**
      * 获取地理位置信息
+     *
      * @return
      */
     public static String getLocation() {
@@ -329,7 +361,7 @@ public class PhoneUtil {
             }
             //Log.d(TAG, "jswrapper:定位成功后的值：" + localJson.toString());
             retJson = localJson.toString();
-        }catch (JSONException e) {
+        } catch (JSONException e) {
 
         }
         return retJson;
@@ -348,7 +380,7 @@ public class PhoneUtil {
                 return "";
             }
             List<SubscriptionInfo> mSubInfoList = mSubscriptionManager.getActiveSubscriptionInfoList();
-            if(mSubInfoList != null) {
+            if (mSubInfoList != null) {
                 for (SubscriptionInfo info : mSubInfoList) {
                     if (null != info) {
                         return info.getIccId();
@@ -747,7 +779,7 @@ public class PhoneUtil {
             PackageManager pkgMgr = context.getPackageManager();
             PackageInfo pkgInfo = pkgMgr.getPackageInfo(context.getPackageName(), 0);
             return pkgInfo.packageName;
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
         return "";

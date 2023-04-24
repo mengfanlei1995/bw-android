@@ -121,7 +121,7 @@ public class JsbBridge {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Log.d("CommonBridge", "jswrapper: JS:" + toJsonObj.toString());
+        Log.d("CommonBridge", "jswrapper: JS:" + ret.toString());
         return ret.toString();
     }
 
@@ -579,4 +579,27 @@ public class JsbBridge {
             e.printStackTrace();
         }
     }
+
+    //跳转google市场
+    public static void goStore() {
+        final Activity app = ActivityManager.getInstance().getCurActivity();
+        String packageName = app.getPackageName();
+        //这里开始执行一个应用市场跳转逻辑，默认this为Context上下文对象
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=" + packageName)); //跳转到应用市场，非Google Play市场一般情况也实现了这个接口
+        //存在手机里没安装应用市场的情况，跳转会包异常，做一个接收判断
+        if (intent.resolveActivity(app.getPackageManager()) != null) { //可以接收
+            app.startActivity(intent);
+        } else { //没有应用市场，我们通过浏览器跳转到Google Play
+            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
+
+            //这里存在一个极端情况就是有些用户浏览器也没有，再判断一次
+            if (intent.resolveActivity(app.getPackageManager()) != null) { //有浏览器
+                app.startActivity(intent);
+            } else { //天哪，这还是智能手机吗？
+                Toast.makeText(app, "You don't have an app market installed, not even a browser!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
