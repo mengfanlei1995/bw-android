@@ -38,6 +38,9 @@ import com.bw.game.App;
 import com.bw.game.manager.ActivityManager;
 import com.bw.game.xpermissionutils.LocationUtils;
 import com.bw.game.xpermissionutils.PermissionHelper;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -188,6 +191,7 @@ public class PhoneUtil {
             reportJson.put("timezone", getTimeZone());
             reportJson.put("sim_id", getSimId());
             reportJson.put("imei", getIMEI());
+            reportJson.put("gaid", getGAID());
 //            reportJson.put("ipAddress", getIpAddress());
             //Log.d("PhoneUtil", "jswrapper: JS :  imei   " + getIMEI());
         } catch (Exception e) {
@@ -196,6 +200,24 @@ public class PhoneUtil {
         }
         //Log.d("PhoneUtil", "jswrapper: JS: getPhoneInfo : " + reportJson.toString());
         return reportJson;
+    }
+
+    public static String getGAID() {
+        AdvertisingIdClient.Info adInfo = null;
+        try {
+            adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context);
+        } catch (IOException e) {
+            // Unrecoverable error connecting to Google Play services (e.g.,
+            // the old version of the service doesn't support getting AdvertisingId).
+        } catch (GooglePlayServicesRepairableException e) {
+            // Encountered a recoverable error connecting to Google Play services.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // Google Play services is not available entirely.
+        }
+
+        String advertisingId = adInfo.getId();
+        boolean isLimitAdTrackingEnabled = adInfo.isLimitAdTrackingEnabled();
+        return advertisingId;
     }
 
     public static String getIpAddress() {
