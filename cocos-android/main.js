@@ -175,7 +175,7 @@ if (window.jsb) {
         } catch (e) { }
 
         var cocosVersion = localStorage.getItem('COCOSVERSION');
-        console.log(`缓存的版本信息：`, cocosVersion, '-', currApkVersion);
+//        console.log(`缓存的版本信息：`, cocosVersion, '-', currApkVersion);
         let flag = true;
         if (currApkVersion && cocosVersion) {
             flag = versionCompare(cocosVersion, currApkVersion) <= 0

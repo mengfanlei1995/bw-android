@@ -45,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
@@ -187,6 +188,8 @@ public class PhoneUtil {
             reportJson.put("sim_id", getSimId());
             reportJson.put("imei", getIMEI());
             reportJson.put("gaid", getGAID());
+            reportJson.put("root", CheckRootPathSU());
+            reportJson.put("simulator", isEmulator());
 //            reportJson.put("ipAddress", getIpAddress());
             //Log.d("PhoneUtil", "jswrapper: JS :  imei   " + getIMEI());
         } catch (Exception e) {
@@ -196,6 +199,24 @@ public class PhoneUtil {
         //Log.d("PhoneUtil", "jswrapper: JS: getPhoneInfo : " + reportJson.toString());
         return reportJson;
     }
+
+    public static boolean CheckRootPathSU() {
+        File f = null;
+        final String kSuSearchPaths[] = {"/system/bin/", "/system/xbin/", "/system/sbin/", "/sbin/", "/vendor/bin/"};
+        try {
+            for (int i = 0; i < kSuSearchPaths.length; i++) {
+                f = new File(kSuSearchPaths[i] + "su");
+                if (f != null && f.exists()) {
+                    return true;
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     public static String getGAID() {
         return "";
@@ -576,6 +597,7 @@ public class PhoneUtil {
      *
      * @return
      */
+    @SuppressLint("MissingPermission")
     public static String getMacAddress() {
         String macAddress = "";
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -688,21 +710,21 @@ public class PhoneUtil {
         intent.setAction(Intent.ACTION_DIAL);
         // 是否可以处理跳转到拨号的 Intent
         boolean canResolveIntent = intent.resolveActivity(context.getPackageManager()) != null;
-
-        return Build.FINGERPRINT.startsWith("generic")
-                || Build.FINGERPRINT.toLowerCase().contains("vbox")
-                || Build.FINGERPRINT.toLowerCase().contains("test-keys")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.contains("Emulator")
-                || Build.SERIAL.equalsIgnoreCase("unknown")
-                || Build.SERIAL.equalsIgnoreCase("android")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
-                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-                || "google_sdk".equals(Build.PRODUCT)
-                || ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
-                .getNetworkOperatorName().toLowerCase().equals("android")
-                || !canResolveIntent;
+        return !canResolveIntent;
+//        return Build.FINGERPRINT.startsWith("generic")
+//                || Build.FINGERPRINT.toLowerCase().contains("vbox")
+//                || Build.FINGERPRINT.toLowerCase().contains("test-keys")
+//                || Build.MODEL.contains("google_sdk")
+//                || Build.MODEL.contains("Emulator")
+//                || Build.SERIAL.equalsIgnoreCase("unknown")
+//                || Build.SERIAL.equalsIgnoreCase("android")
+//                || Build.MODEL.contains("Android SDK built for x86")
+//                || Build.MANUFACTURER.contains("Genymotion")
+//                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+//                || "google_sdk".equals(Build.PRODUCT)
+//                || ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
+//                .getNetworkOperatorName().toLowerCase().equals("android")
+//                || !canResolveIntent;
     }
 
     /**
@@ -731,7 +753,7 @@ public class PhoneUtil {
             return true;
         } else {
             // 如果有蓝牙不一定是有效的。获取蓝牙名称，若为null 则默认为模拟器
-            String name = ba.getName();
+            @SuppressLint("MissingPermission") String name = ba.getName();
             if (TextUtils.isEmpty(name)) {
                 return true;
             } else {

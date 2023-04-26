@@ -1,13 +1,17 @@
 package com.bw.game.bridge;
 
+import android.util.Log;
+
 import com.bw.game.manager.ActivityManager;
+
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommonBridge {
-    public static void commonSuccEvalString(String methon,Object callBackName, Object jsonStr) {
+    public static void commonSuccEvalString(String methon, Object callBackName, Object jsonStr) {
         Map<String, Object> map = new HashMap<>();
         map.put("method", methon);
         map.put("data", jsonStr);
@@ -18,7 +22,7 @@ public class CommonBridge {
         Map<String, Object> map = new HashMap<>();
         map.put("method", "succ");
         map.put("data", jsonStr);
-        commonEvalString(callbakKey,new JSONObject(map).toString());
+        commonEvalString(callbakKey, new JSONObject(map).toString());
     }
 
     public static void commonFailEvalString(Object callbakKey, Object jsonStr) {

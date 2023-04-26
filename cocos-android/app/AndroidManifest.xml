@@ -28,10 +28,9 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
-    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+<!--    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>-->
+<!--    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>-->
+<!--    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>-->
 
 
     <application
@@ -66,7 +65,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="appurl" android:scheme="luckywinnerwebsite" />
+                <data android:host="appurl" android:scheme="com.winner.casino.wheel" />
             </intent-filter>
         </activity>
         <provider
@@ -84,5 +83,8 @@
 
     <queries>
         <package android:name="com.whatsapp" />
+        <package android:name="org.telegram.messenger" />
+        <package android:name="org.telegram.messenger.web" />
+        <package android:name="com.facebook.katana" />
     </queries>
 </manifest>
