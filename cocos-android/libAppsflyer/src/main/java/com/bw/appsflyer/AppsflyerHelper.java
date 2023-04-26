@@ -24,9 +24,7 @@ import org.json.JSONObject;
  * @description
  */
 public class AppsflyerHelper {
-    /*包名：in.xilnnd.bw的时候用*/
-    //private static final String AF_DEV_KEY = "f8GaCKeVRgWjgMubyqQjFX";
-    /*包名：luckywinner.website的时候用*/
+    
     private static final String AF_DEV_KEY = "to8XEHPaN3hiEa8nPA6fiZ";
 
     private volatile static AppsflyerHelper instance;

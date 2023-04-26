@@ -33,7 +33,7 @@ import com.bw.game.util.GlobalConstant;
 import com.bw.game.util.PhoneUtil;
 import com.bw.game.util.SharePreUtil;
 import com.bw.game.window.WebDialog;
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -478,80 +478,80 @@ public class JsbBridge {
         }
     }
 
-    /**
-     * 上报Firebase事件
-     * @jsonData jsonData
-     */
-    public static void postFirebaseEvent(final String jsonData) {
-        final Activity activity = ActivityManager.getInstance().getCurActivity();
-        try {
-            JSONObject json = new JSONObject(jsonData);
-            final String eventName = json.optString("eventName");
-            JSONObject jsonObject = (JSONObject) json.opt("params");
-            activity.runOnUiThread (new Runnable() {
-                @Override
-                public void run() {
-                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
-                    Bundle bundle = new Bundle();
-                    Iterator it = jsonObject.keys();
-                    String key;
-                    Object value;
-                    while (it.hasNext()) {
-                        key = it.next().toString();
-                        value = jsonObject.opt(key);
-                        bundle.putString(key, value.toString());
-                    }
-                    firebaseAnalytics.logEvent(eventName, bundle);
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Firebase 设置UserId
-     * @userId userId
-     */
-    public static void setFirebaseUserId(final String userId) {
-        final Activity activity = ActivityManager.getInstance().getCurActivity();
-        activity.runOnUiThread (new Runnable() {
-            @Override
-            public void run() {
-                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
-                firebaseAnalytics.setUserId(userId);
-            }
-        });
-    }
-
-    /**
-     * Firebase 设置UserProperty
-     * @propJson propJson
-     */
-    public static void setFirebaseUserProperty(final String propJson) {
-        final Activity activity = ActivityManager.getInstance().getCurActivity();
-        try {
-            JSONObject json = new JSONObject(propJson);
-            JSONObject jsonObject = (JSONObject) json.opt("params");
-            activity.runOnUiThread (new Runnable() {
-                @Override
-                public void run() {
-                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
-                    Iterator it = jsonObject.keys();
-                    String key;
-                    Object value;
-                    while (it.hasNext()) {
-                        key = it.next().toString();
-                        value = jsonObject.opt(key);
-                        firebaseAnalytics.setUserProperty(key, value.toString());
-                    }
-                }
-
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * 上报Firebase事件
+//     * @jsonData jsonData
+//     */
+//    public static void postFirebaseEvent(final String jsonData) {
+//        final Activity activity = ActivityManager.getInstance().getCurActivity();
+//        try {
+//            JSONObject json = new JSONObject(jsonData);
+//            final String eventName = json.optString("eventName");
+//            JSONObject jsonObject = (JSONObject) json.opt("params");
+//            activity.runOnUiThread (new Runnable() {
+//                @Override
+//                public void run() {
+//                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+//                    Bundle bundle = new Bundle();
+//                    Iterator it = jsonObject.keys();
+//                    String key;
+//                    Object value;
+//                    while (it.hasNext()) {
+//                        key = it.next().toString();
+//                        value = jsonObject.opt(key);
+//                        bundle.putString(key, value.toString());
+//                    }
+//                    firebaseAnalytics.logEvent(eventName, bundle);
+//                }
+//            });
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    /**
+//     * Firebase 设置UserId
+//     * @userId userId
+//     */
+//    public static void setFirebaseUserId(final String userId) {
+//        final Activity activity = ActivityManager.getInstance().getCurActivity();
+//        activity.runOnUiThread (new Runnable() {
+//            @Override
+//            public void run() {
+//                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+//                firebaseAnalytics.setUserId(userId);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * Firebase 设置UserProperty
+//     * @propJson propJson
+//     */
+//    public static void setFirebaseUserProperty(final String propJson) {
+//        final Activity activity = ActivityManager.getInstance().getCurActivity();
+//        try {
+//            JSONObject json = new JSONObject(propJson);
+//            JSONObject jsonObject = (JSONObject) json.opt("params");
+//            activity.runOnUiThread (new Runnable() {
+//                @Override
+//                public void run() {
+//                    FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+//                    Iterator it = jsonObject.keys();
+//                    String key;
+//                    Object value;
+//                    while (it.hasNext()) {
+//                        key = it.next().toString();
+//                        value = jsonObject.opt(key);
+//                        firebaseAnalytics.setUserProperty(key, value.toString());
+//                    }
+//                }
+//
+//            });
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 上报Facebook事件

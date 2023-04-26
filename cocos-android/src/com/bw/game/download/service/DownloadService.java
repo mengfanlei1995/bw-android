@@ -17,18 +17,13 @@ import com.bw.game.download.config.UpdateConfiguration;
 import com.bw.game.download.listener.OnDownloadListener;
 import com.bw.game.download.manager.DownloadManager;
 import com.bw.game.download.manager.HttpDownloadManager;
-import luckywinner.website.R;
+import com.winner.casino.wheel.R;
 
 import java.io.File;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
 public final class DownloadService extends Service implements OnDownloadListener {
 
     private static final String TAG = "DownloadService";

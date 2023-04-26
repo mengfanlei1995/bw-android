@@ -9,13 +9,8 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import luckywinner.website.R;
+import com.winner.casino.wheel.R;
 
-/**
- * @author GengTao
- * @date 2020/9/23
- * @description
- */
 public class StrokeTextView extends TextView {
 
     public TextView borderText;///用于描边的TextView

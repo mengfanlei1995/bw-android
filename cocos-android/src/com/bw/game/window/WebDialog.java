@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import luckywinner.website.R;
+import com.winner.casino.wheel.R;
 
 
 /**

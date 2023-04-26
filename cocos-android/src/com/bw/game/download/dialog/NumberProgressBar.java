@@ -11,7 +11,7 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import luckywinner.website.R;
+import com.winner.casino.wheel.R;
 
 
 /**

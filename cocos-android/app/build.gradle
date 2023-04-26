@@ -1,7 +1,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
 apply plugin: 'walle'
 
 android {
@@ -76,10 +76,10 @@ android {
 
         }
         release {
-            storeFile file('./../bw.keystore')
-            storePassword 'rummyfanle'
-            keyAlias 'BW'
-            keyPassword 'rummyfanle'
+            storeFile file('./../winnercasinowheel.keystore')
+            storePassword 'winnercasinowheel'
+            keyAlias 'winnercasinowheel'
+            keyPassword 'winnercasinowheel'
         }
     }
 
@@ -119,6 +119,8 @@ android {
     viewBinding {
         enabled true
     }
+
+//    ndkVersion '21.4.7075529'
 }
 
 android.applicationVariants.all { variant ->
@@ -164,17 +166,18 @@ android.applicationVariants.all { variant ->
 
 dependencies {
     implementation fileTree(dir: '../libs', include: ['*.jar','*.aar'])
-    implementation 'androidx.core:core:1.2.0'
+    implementation 'androidx.core:core:1.7.0'
     implementation fileTree(dir: COCOS2D_X_PATH + "/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
     implementation project(':libAppsflyer')
     implementation project(':libFacebook')
-    implementation 'com.facebook.android:facebook-share:latest.release'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation platform('com.google.firebase:firebase-bom:30.0.1')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.facebook.android:facebook-share:16.0.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+//    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+//    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.meituan.android.walle:library:1.1.7'
 //    implementation 'com.google.android.gms:play-services-ads:20.2.0'
+//    implementation 'com.google.android.gms:play-services-ads:22.0.0'
     //implementation 'com.tencent.bugly:crashreport:latest.release'
 }

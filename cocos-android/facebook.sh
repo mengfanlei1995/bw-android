@@ -1,1 +1,1 @@
-keytool -exportcert -alias goldendragonslots -keystore goldendragonslots.keystore | openssl sha1 -binary | openssl base64
+keytool -exportcert -alias winnercasinowheel -keystore winnercasinowheel.keystore | openssl sha1 -binary | openssl base64

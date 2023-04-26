@@ -28,7 +28,7 @@ import com.bw.game.download.view.StrokeTextView;
 import com.bw.game.util.ApkUtil;
 import com.bw.game.util.DensityUtil;
 import com.bw.game.util.FileUtil;
-import luckywinner.website.R;
+import com.winner.casino.wheel.R;
 
 import java.io.File;
 
