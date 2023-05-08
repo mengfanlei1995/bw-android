@@ -181,8 +181,8 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            exitBy2Click();
-            commonEvalString("onKeyDownEvent");
+            exitBy2Click();
+//            commonEvalString("onKeyDownEvent");
         }
         return false;
     }
