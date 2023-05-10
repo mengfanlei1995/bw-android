@@ -95,6 +95,7 @@ public class JsbBridge {
 
     /**
      * 打开WebView
+     *
      * @param json
      */
     public static void openWebView(String json) {
@@ -139,6 +140,7 @@ public class JsbBridge {
 
     /**
      * 获取AF数据
+     *
      * @return {install_time=2021-10-28 08:33:07.791, af_status=Organic, af_message=organic install, is_first_launch=true}
      */
     public static String getAFData() {
@@ -163,11 +165,11 @@ public class JsbBridge {
             Context context = App.getContext();
             JSONObject jsonObject = new JSONObject(json);
             final Integer income = jsonObject.optInt("income");
-            if(income > 0)
+            if (income > 0)
                 AppsflyerHelper.getInstance().recordIncome(context, jsonObject);
             else
                 AppsflyerHelper.getInstance().recordWithdraw(context, jsonObject);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
 
         }
     }
@@ -177,7 +179,7 @@ public class JsbBridge {
             Context context = App.getContext();
             JSONObject jsonObject = new JSONObject(json);
             AppsflyerHelper.getInstance().reportLogin(context, jsonObject);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
 
         }
     }
@@ -191,11 +193,11 @@ public class JsbBridge {
         });
     }
 
-    public static void installUpdate(final String json){
+    public static void installUpdate(final String json) {
         //Log.d(TAG, "js: json:" + json);
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
         final Context context = App.getContext();
-        mActivity.runOnUiThread(new Runnable()  {
+        mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String apkUrl = "";
@@ -213,7 +215,7 @@ public class JsbBridge {
 
                 }
 
-                if(apkUrl.isEmpty()) return;
+                if (apkUrl.isEmpty()) return;
                 String apkName = GlobalConstant.APKDOWNLOADNAME + "_" + apkVersion + ".apk";
                 String localApkUrl = SharePreUtil.getString(mActivity, GlobalConstant.APKDOWNLOADURL, "");
                 UpdateConfiguration configuration = new UpdateConfiguration()
@@ -264,53 +266,60 @@ public class JsbBridge {
 
     /**
      * 拉起whatsApp，聊天
+     *
      * @param mobileNum
      */
     private static String chatInWhatsApp(String mobileNum) {
-        JSONObject ret = new JSONObject();
+        String result = "success";
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
         try {
             final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + mobileNum));
             intent.setPackage("com.whatsapp");
             mActivity.startActivity(intent);
-            ret.put("success", true);
         } catch (Exception e) {
             //  没有安装WhatsApp
+            result = null;
             e.printStackTrace();
         }
 
-        return ret.toString();
+        return result;
     }
 
     /**
      * 拉起telegram，聊天
+     *
      * @param name
      */
     private static String chatInTelegram(String name) {
-        JSONObject ret = new JSONObject();
+        String result = "success";
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
+        String appName = "org.telegram.messenger.web";
+        boolean isAppInstalled = ApkUtil.isAppInstall(mActivity, appName);
+        if (!isAppInstalled) {
+            appName = "org.telegram.messenger";
+        }
         try {
-            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://telegram.me/"+name));
-            intent.setPackage("org.telegram.messenger.web");
+            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://telegram.me/" + name));
+            intent.setPackage(appName);
             mActivity.startActivity(intent);
-            ret.put("success", true);
         } catch (Exception e) {
             //  没有安装telegram
+            result = null;
             e.printStackTrace();
         }
-
-        return ret.toString();
+        return result;
     }
 
     /**
      * 分享内容到whatsApp
+     *
      * @param url
      */
     private static void shareLinkWhatsApp(String title, String url) {
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
         String whatsAppPackageName = "com.whatsapp";
-        if(!ApkUtil.isAppInstall(mActivity, whatsAppPackageName)){
-            //这里通知cocos，告知玩家whatapp未安装
+        if (!ApkUtil.isAppInstall(mActivity, whatsAppPackageName)) {
+            Toast.makeText(mActivity, "whatsapp not Installed", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -323,23 +332,20 @@ public class JsbBridge {
 
     /**
      * 分享内容到telegram
+     *
      * @param url
      */
-    private static void shareMessageTelegram(String title, String url)
-    {
+    private static void shareMessageTelegram(String title, String url) {
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
         final String appName = "org.telegram.messenger.web";
         final boolean isAppInstalled = !ApkUtil.isAppInstall(mActivity, appName);
-        if (isAppInstalled)
-        {
+        if (isAppInstalled) {
             Intent myIntent = new Intent(Intent.ACTION_SEND);
             myIntent.setType("text/plain");
             myIntent.setPackage(appName);
             myIntent.putExtra(Intent.EXTRA_TEXT, url);//
             mActivity.startActivity(Intent.createChooser(myIntent, title));
-        }
-        else
-        {
+        } else {
             Toast.makeText(mActivity, "Telegram not Installed", Toast.LENGTH_SHORT).show();
         }
     }
@@ -347,6 +353,7 @@ public class JsbBridge {
 
     /**
      * 分享链接
+     *
      * @param jsonData
      */
     public static void shareLink(final String jsonData) {
@@ -363,7 +370,7 @@ public class JsbBridge {
                         shareLinkFB(mActivity, title, url);
                     } else if ("whatsapp".equals(platform)) {
                         shareLinkWhatsApp(title, url);
-                    }else if ("telegram".equals(platform)) {
+                    } else if ("telegram".equals(platform)) {
                         shareMessageTelegram(title, url);
                     } else {
                         shareLinkSystem(title, url);
@@ -380,22 +387,26 @@ public class JsbBridge {
             @Override
             public void onSuccess(String postId) {
                 //调用cocos的成功回调  result.getPostId()
+                Toast.makeText(mActivity, "share success", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancel() {
                 //调用cocos的取消回调
+                Toast.makeText(mActivity, "share cancel", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFail(String reason) {
                 //调用cocos的失败回调
+                Toast.makeText(mActivity, "share fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /**
      * 拉起系统分享
+     *
      * @param title
      * @param url
      */
@@ -409,12 +420,11 @@ public class JsbBridge {
     }
 
     /**
-     *
      * @param jsonData
      */
     public static void loginFB(String jsonData) {
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-        mActivity.runOnUiThread (new Runnable() {
+        mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 handleLoginFB();
@@ -437,7 +447,7 @@ public class JsbBridge {
 
     private static void handleLoginFB() {
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-        if(FacebookHelper.getInstance().isLogin()) {
+        if (FacebookHelper.getInstance().isLogin()) {
             String jsonStr = FacebookHelper.getInstance().getAccessTokenJson().toString();
             CommonBridge.commonEvalStringParam("faceBookLogined", jsonStr);
 //            Log.d("CommonBridge", "jswrapper: JS: faceBookLogined");
@@ -555,6 +565,7 @@ public class JsbBridge {
 
     /**
      * 上报Facebook事件
+     *
      * @jsonData jsonData
      */
     public static void postFacebookEvent(final String jsonData) {

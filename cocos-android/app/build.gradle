@@ -7,6 +7,7 @@ apply plugin: 'walle'
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
+    ndkVersion NDKVERSION
 
     defaultConfig {
         multiDexEnabled true
@@ -29,13 +30,12 @@ android {
                                         project.file(COCOS2D_X_PATH + "/external")]
                     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                         arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
-                    }
-                    else {
+                    } else {
                         arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
                     }
 
                     arguments '-j' + Runtime.runtime.availableProcessors()
-                    abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+                    abiFilters.addAll(PROP_APP_ABI.split(':').collect { it as String })
                 }
             }
         }
@@ -58,8 +58,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     externalNativeBuild {
@@ -135,7 +135,7 @@ android.applicationVariants.all { variant ->
     delete "${buildDir}/intermediates/merged_assets/${debugDir}"
     delete "${buildDir}/intermediates/merged_assets/${releaseDir}"
 
-    variant.mergeAssetsProvider.get().doLast{
+    variant.mergeAssetsProvider.get().doLast {
         def sourceDir = COCOS_RESOURCE_EXPORT_PATH
         def mianjsDir = COCOS_RESOURCE_MAINJS_PATH
         copy {
@@ -165,7 +165,7 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
-    implementation fileTree(dir: '../libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: '../libs', include: ['*.jar', '*.aar'])
     implementation 'androidx.core:core:1.7.0'
     implementation fileTree(dir: COCOS2D_X_PATH + "/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
