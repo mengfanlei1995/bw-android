@@ -10,12 +10,14 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.attribution.AppsFlyerRequestListener;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -117,6 +119,32 @@ public class AppsflyerHelper {
 
     public boolean afInitFail() {
         return initFail;
+    }
+
+    public void afReport(String eventName, JSONObject info) throws JSONException {
+        Map<String, Object> eventValues = new HashMap<String, Object>();
+        Iterator it = info.keys();
+        String vol = "";//值
+        String key = null;//键
+        while (it.hasNext()) {//遍历JSONObject
+            key = (String) it.next().toString();
+            vol = info.optString(key);
+            eventValues.put(key, vol);
+        }
+        AppsFlyerLib.getInstance().logEvent(mContext, eventName, eventValues,
+                new AppsFlyerRequestListener() {
+                    @Override
+                    public void onSuccess() {
+//                        Log.d("afreport===onSuccess", eventName);
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+//                        Log.d("afreport===onSuccess", "Event failed to be sent:\n" +
+//                                "Error code: " + i + "\n"
+//                                + "Error description: " + s);
+                    }
+                });
     }
 
     //userId, sessionId, nickName, headPic, phone, accountType

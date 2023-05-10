@@ -602,4 +602,20 @@ public class JsbBridge {
         }
     }
 
+    /**
+     * 上报af事件
+     *
+     * @jsonData jsonDatap
+     */
+    public static void postAfEvent(final String jsonData) {
+        try {
+            JSONObject json = new JSONObject(jsonData);
+            final String eventName = json.optString("eventName");
+            JSONObject jsonObject = (JSONObject) json.opt("params");
+            AppsflyerHelper.getInstance().afReport(eventName, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
