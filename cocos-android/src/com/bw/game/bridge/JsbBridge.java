@@ -288,9 +288,9 @@ public class JsbBridge {
     /**
      * 拉起telegram，聊天
      *
-     * @param name
+     * @param url
      */
-    private static String chatInTelegram(String name) {
+    private static String chatInTelegram(String url) {
         String result = "success";
         final Activity mActivity = ActivityManager.getInstance().getCurActivity();
         String appName = "org.telegram.messenger.web";
@@ -299,7 +299,7 @@ public class JsbBridge {
             appName = "org.telegram.messenger";
         }
         try {
-            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://telegram.me/" + name));
+            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.setPackage(appName);
             mActivity.startActivity(intent);
         } catch (Exception e) {

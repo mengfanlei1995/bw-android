@@ -134,6 +134,8 @@ android.applicationVariants.all { variant ->
     // delete previous files first
     delete "${buildDir}/intermediates/merged_assets/${debugDir}"
     delete "${buildDir}/intermediates/merged_assets/${releaseDir}"
+    delete "${buildDir}/intermediates/merged_assets/${variant.dirName}"
+    delete variant.mergeAssets.outputDir
 
     variant.mergeAssetsProvider.get().doLast {
         def sourceDir = COCOS_RESOURCE_EXPORT_PATH
