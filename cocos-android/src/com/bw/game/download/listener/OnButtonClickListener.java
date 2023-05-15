@@ -6,11 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
 public interface OnButtonClickListener {
 
     /**

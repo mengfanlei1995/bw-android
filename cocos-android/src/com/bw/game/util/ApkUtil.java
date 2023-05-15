@@ -12,11 +12,6 @@ import java.io.File;
 
 import androidx.core.content.FileProvider;
 
-/**
- * @author GengTao
- * @date 2020/9/21
- * @description
- */
 public class ApkUtil {
     /**
      * 安装一个apk

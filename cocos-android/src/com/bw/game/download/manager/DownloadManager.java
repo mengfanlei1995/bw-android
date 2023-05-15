@@ -9,11 +9,6 @@ import com.bw.game.download.base.BaseHttpDownloadManager;
 import com.bw.game.download.config.UpdateConfiguration;
 import com.bw.game.download.dialog.UpdateDialog;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
 public class DownloadManager {
 
     private static final String TAG = "DownloadManager";

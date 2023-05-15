@@ -12,11 +12,7 @@ import java.util.List;
 
 import androidx.annotation.ColorInt;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
+
 public class UpdateConfiguration {
 
     private Context context;

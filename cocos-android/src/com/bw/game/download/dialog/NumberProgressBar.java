@@ -14,10 +14,7 @@ import android.view.View;
 import com.winner.casino.wheel.R;
 
 
-/**
- * Created by daimajia on 14-4-30.
- * <a href="https://github.com/daimajia/NumberProgressBar/}"/>
- */
+
 public class NumberProgressBar extends View {
 
     private int mMaxProgress = 100;

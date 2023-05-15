@@ -7,13 +7,7 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 
-/**
- * 可能会有用的一些方法
- *
- * @author AndSync
- * @date 2017/10/30
- * Copyright © 2014-2017 AndSync All rights reserved.
- */
+
 public class PermissionHelper {
     /**
      * 6.0以下判断是否开启录音权限

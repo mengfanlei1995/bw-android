@@ -31,13 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-/**
- * Android 6.0运行时权限处理 <a href="https://github.com/AndSync/XPermissionUtils">
- *
- * @author AndSync
- * @date 2017/10/30
- * Copyright © 2014-2017 AndSync All rights reserved.
- */
+
 public class XPermissionUtils {
 
     private static int sRequestCode = -1;

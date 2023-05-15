@@ -1,10 +1,6 @@
 package com.bw.game.util;
 
-/**
- * @author GengTao
- * @date 2019/12/20
- * @description
- */
+
 public class GlobalConstant {
     /**
      * 网络连接超时时间

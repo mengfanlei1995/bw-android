@@ -22,11 +22,6 @@ import android.widget.Toast;
 import com.winner.casino.wheel.R;
 
 
-/**
- * @author GengTao
- * @date 2021/10/14
- * @description
- */
 public class WebDialog extends Dialog implements View.OnClickListener {
 
     private Context context;

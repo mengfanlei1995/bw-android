@@ -25,6 +25,7 @@
 package com.activity;
 
 import com.bw.facebook.FacebookHelper;
+import com.bw.game.bridge.JsbBridge;
 import com.bw.game.cocos.SDKWrapper;
 import com.bw.game.xpermissionutils.XPermissionUtils;
 
@@ -64,7 +65,6 @@ public class AppActivity extends Cocos2dxActivity {
         }
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
-
 //        Intent intent = getIntent();
 //        if (intent != null) {
 //            String intentAction = intent.getAction();

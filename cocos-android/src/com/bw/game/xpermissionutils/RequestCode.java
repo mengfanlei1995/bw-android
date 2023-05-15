@@ -1,12 +1,6 @@
 package com.bw.game.xpermissionutils;
 
-/**
- * 请求码
- *
- * @author AndSync
- * @date 2017/10/30
- * Copyright © 2014-2017 AndSync All rights reserved.
- */
+
 public interface RequestCode {
     /**
      * 电话

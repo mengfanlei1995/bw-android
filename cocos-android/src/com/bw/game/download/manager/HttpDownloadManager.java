@@ -25,11 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
 public class HttpDownloadManager extends BaseHttpDownloadManager {
 
     private static final String TAG = "HttpDownloadManager";

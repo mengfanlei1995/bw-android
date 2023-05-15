@@ -34,11 +34,7 @@ import java.io.File;
 
 import androidx.annotation.NonNull;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
+
 public class UpdateDialog extends Dialog implements View.OnClickListener, OnDownloadListener {
     private Context context;
     private DownloadManager manager;

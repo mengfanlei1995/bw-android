@@ -2,6 +2,7 @@ package com.bw.game.bridge;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.bw.facebook.FacebookHelper;
@@ -44,11 +47,7 @@ import java.util.Iterator;
 
 import static com.bw.game.bridge.CommonBridge.commonEvalString;
 
-/**
- * @author hwz
- * @time 2021-04-15
- * @describe 游戏交互公共方法
- */
+
 public class JsbBridge {
     private static final String TAG = "JsbBridge";
 
@@ -122,7 +121,7 @@ public class JsbBridge {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("CommonBridge", "jswrapper: JS:" + ret.toString());
+//        Log.d("CommonBridge", "jswrapper: JS:" + ret.toString());
         return ret.toString();
     }
 
@@ -136,6 +135,33 @@ public class JsbBridge {
                 clipboard.setPrimaryClip(clip);
             }
         });
+    }
+
+    private static String clipBoardText = "";
+
+    public static String getClipBoard() {
+        long deadLine = 50 + SystemClock.elapsedRealtime();
+        ActivityManager.getInstance().runAndroidThread(new Runnable() {
+            @Override
+            public void run() {
+                ClipboardManager clipboardManager = (ClipboardManager) ActivityManager.getInstance().getCurActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboardManager == null) {
+
+                } else if (!clipboardManager.hasPrimaryClip()) {
+
+                } else if (!clipboardManager.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+
+                } else {
+                    clipBoardText = clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+                }
+            }
+        });
+        while (clipBoardText.isEmpty()) {
+            if (SystemClock.elapsedRealtime() > deadLine) {
+                break;
+            }
+        }
+        return clipBoardText;
     }
 
     /**

@@ -2,11 +2,6 @@ package com.bw.game.download.listener;
 
 import java.io.File;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
 public interface OnDownloadListener {
 
     /**

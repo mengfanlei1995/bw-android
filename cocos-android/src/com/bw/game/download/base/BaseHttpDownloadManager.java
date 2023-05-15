@@ -4,11 +4,7 @@ import android.content.Context;
 
 import com.bw.game.download.listener.OnDownloadListener;
 
-/**
- * @author GengTao
- * @date 2020/9/18
- * @description
- */
+
 public abstract class BaseHttpDownloadManager {
 
     /**

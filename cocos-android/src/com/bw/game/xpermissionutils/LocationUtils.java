@@ -8,13 +8,7 @@ import android.util.Log;
 import com.bw.game.util.PhoneUtil;
 import static com.bw.game.bridge.CommonBridge.commonEvalStringParam;
 
-/**
- * 获取位置工具类
- *
- * @author AndSync
- * @date 2017/10/30
- * Copyright © 2014-2017 AndSync All rights reserved.
- */
+
 public class LocationUtils {
     private static final String TAG = "LocationUtil";
 

@@ -8,13 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
 
-/**
- * Dialog工具类
- *
- * @author AndSync
- * @date 2017/10/30
- * Copyright © 2014-2017 AndSync All rights reserved.
- */
+
 public class DialogUtil {
 
     public static void showPermissionManagerDialog(final Context context, String str) {
