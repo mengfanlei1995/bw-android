@@ -28,7 +28,7 @@ public class App extends Application {
         mContext = this;
         ActivityLifeCycle.init(this);
         initChannelInfo(this);
-        FacebookHelper.getInstance().init(this);
+//        FacebookHelper.getInstance().init(this);
         PhoneUtil.init(this);
         AppsflyerHelper.getInstance().init(this, new IInitEvent() {
             @Override

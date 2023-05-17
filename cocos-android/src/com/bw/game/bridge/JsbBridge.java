@@ -655,4 +655,8 @@ public class JsbBridge {
         }
     }
 
+    public static String getCid() {
+        return "10102";
+    }
+
 }
