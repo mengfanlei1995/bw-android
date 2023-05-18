@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 # 代码混淆压缩比，在0~7之间，默认为5，一般不做修改
--optimizationpasses 5
+-optimizationpasses 7
 # 混合时不使用大小写混合，混合后的类名为小写
 -dontusemixedcaseclassnames
 # 指定不去忽略非公共库的类

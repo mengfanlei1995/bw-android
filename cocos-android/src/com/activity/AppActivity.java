@@ -24,7 +24,7 @@
  ****************************************************************************/
 package com.activity;
 
-import com.bw.facebook.FacebookHelper;
+//import com.bw.facebook.FacebookHelper;
 import com.bw.game.bridge.JsbBridge;
 import com.bw.game.cocos.SDKWrapper;
 import com.bw.game.xpermissionutils.XPermissionUtils;
@@ -116,7 +116,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        FacebookHelper.getInstance().activityResultCB(requestCode, resultCode, data);
+//        FacebookHelper.getInstance().activityResultCB(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         SDKWrapper.getInstance().onActivityResult(requestCode, resultCode, data);
     }

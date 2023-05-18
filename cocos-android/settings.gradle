@@ -4,4 +4,3 @@ project(':libcocos2dx').projectDir = new File(COCOS2D_X_PATH + libCocosPath)
 include ':GameApp'
 project(':GameApp').projectDir = new File(settingsDir, 'app')
 include ':libAppsflyer'
-include ':libFacebook'

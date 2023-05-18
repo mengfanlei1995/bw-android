@@ -17,9 +17,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.bw.facebook.FacebookHelper;
-import com.bw.facebook.ILoginListener;
-import com.bw.facebook.IShareListener;
+//import com.bw.facebook.FacebookHelper;
+//import com.bw.facebook.ILoginListener;
+//import com.bw.facebook.IShareListener;
 import com.bw.game.manager.ActivityLifeCycle;
 
 import com.bw.appsflyer.AppsflyerHelper;
@@ -382,53 +382,53 @@ public class JsbBridge {
      *
      * @param jsonData
      */
-    public static void shareLink(final String jsonData) {
-        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    JSONObject json = new JSONObject(jsonData);
-                    final String platform = json.optString("platform");
-                    final String url = json.optString("url");
-                    final String title = json.optString("title");
-                    if ("facebook".equals(platform)) {
-                        shareLinkFB(mActivity, title, url);
-                    } else if ("whatsapp".equals(platform)) {
-                        shareLinkWhatsApp(title, url);
-                    } else if ("telegram".equals(platform)) {
-                        shareMessageTelegram(title, url);
-                    } else {
-                        shareLinkSystem(title, url);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    public static void shareLink(final String jsonData) {
+//        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
+//        mActivity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    JSONObject json = new JSONObject(jsonData);
+//                    final String platform = json.optString("platform");
+//                    final String url = json.optString("url");
+//                    final String title = json.optString("title");
+//                    if ("facebook".equals(platform)) {
+//                        shareLinkFB(mActivity, title, url);
+//                    } else if ("whatsapp".equals(platform)) {
+//                        shareLinkWhatsApp(title, url);
+//                    } else if ("telegram".equals(platform)) {
+//                        shareMessageTelegram(title, url);
+//                    } else {
+//                        shareLinkSystem(title, url);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
-    private static void shareLinkFB(Activity mActivity, String title, String url) {
-        FacebookHelper.getInstance().shareLink(mActivity, title, url, new IShareListener() {
-            @Override
-            public void onSuccess(String postId) {
-                //调用cocos的成功回调  result.getPostId()
-                Toast.makeText(mActivity, "share success", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-                //调用cocos的取消回调
-                Toast.makeText(mActivity, "share cancel", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFail(String reason) {
-                //调用cocos的失败回调
-                Toast.makeText(mActivity, "share fail", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private static void shareLinkFB(Activity mActivity, String title, String url) {
+//        FacebookHelper.getInstance().shareLink(mActivity, title, url, new IShareListener() {
+//            @Override
+//            public void onSuccess(String postId) {
+//                //调用cocos的成功回调  result.getPostId()
+//                Toast.makeText(mActivity, "share success", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                //调用cocos的取消回调
+//                Toast.makeText(mActivity, "share cancel", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFail(String reason) {
+//                //调用cocos的失败回调
+//                Toast.makeText(mActivity, "share fail", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     /**
      * 拉起系统分享
@@ -448,61 +448,61 @@ public class JsbBridge {
     /**
      * @param jsonData
      */
-    public static void loginFB(String jsonData) {
-        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                handleLoginFB();
-            }
-        });
-    }
+//    public static void loginFB(String jsonData) {
+//        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
+//        mActivity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                handleLoginFB();
+//            }
+//        });
+//    }
 
-    /**
-     * facebook 登出
-     */
-    public static void logoutFB() {
-        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                FacebookHelper.getInstance().logOut();
-            }
-        });
-    }
-
-    private static void handleLoginFB() {
-        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-        if (FacebookHelper.getInstance().isLogin()) {
-            String jsonStr = FacebookHelper.getInstance().getAccessTokenJson().toString();
-            CommonBridge.commonEvalStringParam("faceBookLogined", jsonStr);
-//            Log.d("CommonBridge", "jswrapper: JS: faceBookLogined");
-        } else {
-            FacebookHelper.getInstance().registerListener(new ILoginListener() {
-                @Override
-                public void onLoginSuccess(JSONObject result) {
-                    closeFBActivity();
-//                    Log.d("CommonBridge", "jswrapper: JS: faceBookLoginSuccess");
-                    CommonBridge.commonEvalStringParam("faceBookLoginSuccess", result.toString());
-                }
-
-                @Override
-                public void onLoginCancel() {
-                    closeFBActivity();
-//                    Log.d("CommonBridge", "jswrapper: JS: faceBookLoginCancel");
-                    CommonBridge.commonEvalString("faceBookLoginCancel");
-                }
-
-                @Override
-                public void onLoginFail(JSONObject reason) {
-                    closeFBActivity();
-//                    Log.d("CommonBridge", "jswrapper: JS: faceBookLoginFail");
-                    CommonBridge.commonEvalStringParam("faceBookLoginFail", reason.toString());
-                }
-            });
-            FacebookHelper.getInstance().logInWithReadPermissions(mActivity);
-        }
-    }
+//    /**
+//     * facebook 登出
+//     */
+//    public static void logoutFB() {
+//        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
+//        mActivity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                FacebookHelper.getInstance().logOut();
+//            }
+//        });
+//    }
+//
+//    private static void handleLoginFB() {
+//        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
+//        if (FacebookHelper.getInstance().isLogin()) {
+//            String jsonStr = FacebookHelper.getInstance().getAccessTokenJson().toString();
+//            CommonBridge.commonEvalStringParam("faceBookLogined", jsonStr);
+////            Log.d("CommonBridge", "jswrapper: JS: faceBookLogined");
+//        } else {
+//            FacebookHelper.getInstance().registerListener(new ILoginListener() {
+//                @Override
+//                public void onLoginSuccess(JSONObject result) {
+//                    closeFBActivity();
+////                    Log.d("CommonBridge", "jswrapper: JS: faceBookLoginSuccess");
+//                    CommonBridge.commonEvalStringParam("faceBookLoginSuccess", result.toString());
+//                }
+//
+//                @Override
+//                public void onLoginCancel() {
+//                    closeFBActivity();
+////                    Log.d("CommonBridge", "jswrapper: JS: faceBookLoginCancel");
+//                    CommonBridge.commonEvalString("faceBookLoginCancel");
+//                }
+//
+//                @Override
+//                public void onLoginFail(JSONObject reason) {
+//                    closeFBActivity();
+////                    Log.d("CommonBridge", "jswrapper: JS: faceBookLoginFail");
+//                    CommonBridge.commonEvalStringParam("faceBookLoginFail", reason.toString());
+//                }
+//            });
+//            FacebookHelper.getInstance().logInWithReadPermissions(mActivity);
+//        }
+//    }
 
     /**
      * fb登录取消后会残留一个透明activity
@@ -589,33 +589,33 @@ public class JsbBridge {
 //        }
 //    }
 
-    /**
-     * 上报Facebook事件
-     *
-     * @jsonData jsonData
-     */
-    public static void postFacebookEvent(final String jsonData) {
-        try {
-            JSONObject json = new JSONObject(jsonData);
-            final String eventName = json.optString("eventName");
-            JSONObject jsonObject = (JSONObject) json.opt("params");
-            FacebookHelper.getInstance().logEvent(eventName, jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void postFacebookPurchase(final String jsonData) {
-        try {
-            JSONObject json = new JSONObject(jsonData);
-            final BigDecimal purchaseAmount = (BigDecimal) json.opt("purchaseAmount");
-            final String currencyCode = json.optString("currency");
-            JSONObject jsonObject = (JSONObject) json.opt("params");
-            FacebookHelper.getInstance().logPurchase(purchaseAmount, Currency.getInstance(currencyCode), jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * 上报Facebook事件
+//     *
+//     * @jsonData jsonData
+//     */
+//    public static void postFacebookEvent(final String jsonData) {
+//        try {
+//            JSONObject json = new JSONObject(jsonData);
+//            final String eventName = json.optString("eventName");
+//            JSONObject jsonObject = (JSONObject) json.opt("params");
+//            FacebookHelper.getInstance().logEvent(eventName, jsonObject);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void postFacebookPurchase(final String jsonData) {
+//        try {
+//            JSONObject json = new JSONObject(jsonData);
+//            final BigDecimal purchaseAmount = (BigDecimal) json.opt("purchaseAmount");
+//            final String currencyCode = json.optString("currency");
+//            JSONObject jsonObject = (JSONObject) json.opt("params");
+//            FacebookHelper.getInstance().logPurchase(purchaseAmount, Currency.getInstance(currencyCode), jsonObject);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //跳转google市场
     public static void goStore() {

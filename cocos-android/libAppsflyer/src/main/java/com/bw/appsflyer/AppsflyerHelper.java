@@ -12,6 +12,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.attribution.AppsFlyerRequestListener;
@@ -26,8 +27,8 @@ import org.json.JSONObject;
  * @description
  */
 public class AppsflyerHelper {
-    
-    private static final String AF_DEV_KEY = "to8XEHPaN3hiEa8nPA6fiZ";
+
+    private static final String AF_DEV_KEY = "qPEF9EoUWmipvuYV82fPFE";
 
     private volatile static AppsflyerHelper instance;
 
@@ -54,17 +55,15 @@ public class AppsflyerHelper {
 
     /**
      * 初始化
+     *
      * @param application
      */
     public void init(Application application, final IInitEvent listener) {
         mContext = application;
         AppsFlyerLib instance = AppsFlyerLib.getInstance();
         instance.setDebugLog(false);
-        //instance.setAppId("in.xilnnd.bw");
-        //instance.setImeiData(imei);
-        //instance.setAndroidIdData(androidId);
-        instance.setCollectIMEI(true);
-        instance.setCollectAndroidID(true);
+//        instance.setCollectIMEI(true);
+//        instance.setCollectAndroidID(true);
 
         AppsFlyerConversionListener conversionListener = new AppsFlyerConversionListener() {
             @Override
@@ -73,8 +72,7 @@ public class AppsflyerHelper {
 //                for (String attrName : conversionData.keySet()) {
 //                    Log.d("CommonBridge", "jswrapper: " + attrName + " = " + conversionData.get(attrName));
 //                }
-                conversionData.put("appsflyer_id", AppsFlyerLib.getInstance().getAppsFlyerUID(mContext));
-
+                conversionData.put("afid", AppsFlyerLib.getInstance().getAppsFlyerUID(mContext));
                 JSONObject jsonObject = new JSONObject(conversionData);
                 afData = jsonObject.toString();
                 listener.onInitSuccess(jsonObject.toString());
@@ -82,21 +80,28 @@ public class AppsflyerHelper {
 
             @Override
             public void onConversionDataFail(String errorMessage) {
-                /*Log.d("CommonBridge", "jswrapper: error getting conversion data: " + errorMessage);*/
+//                Log.d("CommonBridge", "jswrapper: error getting conversion data: " + errorMessage);
                 initFail = true;
                 listener.onInitFail(errorMessage);
             }
 
             @Override
             public void onAppOpenAttribution(Map<String, String> attributionData) {
-                /*for (String attrName : attributionData.keySet()) {
-                    Log.d("CommonBridge", "jswrapper: attribute: " + attrName + " = " + attributionData.get(attrName));
-                }*/
+//                for (String attrName : attributionData.keySet()) {
+//                    Log.d("CommonBridge", "jswrapper: attribute: " + attrName + " = " + attributionData.get(attrName));
+//                }
+                initFail = false;
+                attributionData.put("afid", AppsFlyerLib.getInstance().getAppsFlyerUID(mContext));
+                JSONObject jsonObject = new JSONObject(attributionData);
+                afData = jsonObject.toString();
+                listener.onInitSuccess(jsonObject.toString());
             }
 
             @Override
             public void onAttributionFailure(String errorMessage) {
-                /*Log.d("CommonBridge", "jswrapper: error onAttributionFailure : " + errorMessage);*/
+//                Log.d("CommonBridge", "jswrapper: error onAttributionFailure : " + errorMessage);
+                initFail = true;
+                listener.onInitFail(errorMessage);
             }
 
         };
@@ -111,6 +116,7 @@ public class AppsflyerHelper {
 
     /**
      * 获取初始化成功参数
+     *
      * @return
      */
     public String getAFData() {
@@ -148,7 +154,7 @@ public class AppsflyerHelper {
     }
 
     //userId, sessionId, nickName, headPic, phone, accountType
-    public void reportLogin(Context context, JSONObject info){
+    public void reportLogin(Context context, JSONObject info) {
         Map<String, Object> eventValues = new HashMap<String, Object>();
         eventValues.put("userId", info.optString("userId"));
         eventValues.put("sessionId", info.optString("sessionId"));
@@ -157,12 +163,13 @@ public class AppsflyerHelper {
         eventValues.put("phone", info.optString("phone"));
         eventValues.put("accountType", info.optString("accountType"));
 //        Log.d("afLaunch=======reportL", String.valueOf(eventValues));
-        AppsFlyerLib.getInstance().logEvent(context,AFInAppEventType.LOGIN,eventValues,
+        AppsFlyerLib.getInstance().logEvent(context, AFInAppEventType.LOGIN, eventValues,
                 new AppsFlyerRequestListener() {
                     @Override
                     public void onSuccess() {
 //                        Log.d("afLaunch=======login", "Event sent successfully");
                     }
+
                     @Override
                     public void onError(int i, String s) {
                         /*Log.d("afLaunch=======login", "Event failed to be sent:\n" +
@@ -174,17 +181,18 @@ public class AppsflyerHelper {
 
     public void recordIncome(Context context, JSONObject info) {
         Map<String, Object> eventValue = new HashMap<String, Object>();
-        eventValue.put(AFInAppEventParameterName.REVENUE,info.optString("income"));
-        eventValue.put(AFInAppEventParameterName.CONTENT_TYPE,info.optString("goodsname"));
-        eventValue.put(AFInAppEventParameterName.CONTENT_ID,info.optString("goodsid"));
-        eventValue.put(AFInAppEventParameterName.CURRENCY,"INR");
+        eventValue.put(AFInAppEventParameterName.REVENUE, info.optString("income"));
+        eventValue.put(AFInAppEventParameterName.CONTENT_TYPE, info.optString("goodsname"));
+        eventValue.put(AFInAppEventParameterName.CONTENT_ID, info.optString("goodsid"));
+        eventValue.put(AFInAppEventParameterName.CURRENCY, "INR");
 //        Log.d("afLaunch=======addcash", String.valueOf(eventValue));
-        AppsFlyerLib.getInstance().logEvent(context , AFInAppEventType.PURCHASE , eventValue,
+        AppsFlyerLib.getInstance().logEvent(context, AFInAppEventType.PURCHASE, eventValue,
                 new AppsFlyerRequestListener() {
                     @Override
                     public void onSuccess() {
 //                        Log.d("afLaunch=======addcash", "Event sent successfully");
                     }
+
                     @Override
                     public void onError(int i, String s) {
                         /*Log.d("afLaunch=======addcash", "Event failed to be sent:\n" +
@@ -196,16 +204,17 @@ public class AppsflyerHelper {
 
     public void recordWithdraw(Context context, JSONObject info) {
         Map<String, Object> eventValue = new HashMap<String, Object>();
-        eventValue.put(AFInAppEventParameterName.REVENUE,info.optString("withdraw"));
-        eventValue.put(AFInAppEventParameterName.CONTENT_TYPE,info.optString("goodsname"));
-        eventValue.put(AFInAppEventParameterName.CONTENT_ID,info.optString("goodsid"));
-        eventValue.put(AFInAppEventParameterName.CURRENCY,"INR");
-        AppsFlyerLib.getInstance().logEvent(context , "withdraw_cash" , eventValue,
+        eventValue.put(AFInAppEventParameterName.REVENUE, info.optString("withdraw"));
+        eventValue.put(AFInAppEventParameterName.CONTENT_TYPE, info.optString("goodsname"));
+        eventValue.put(AFInAppEventParameterName.CONTENT_ID, info.optString("goodsid"));
+        eventValue.put(AFInAppEventParameterName.CURRENCY, "INR");
+        AppsFlyerLib.getInstance().logEvent(context, "withdraw_cash", eventValue,
                 new AppsFlyerRequestListener() {
                     @Override
                     public void onSuccess() {
 //                        Log.d("afLaunch=======withdraw", "Event sent successfully");
                     }
+
                     @Override
                     public void onError(int i, String s) {
                         /*Log.d("afLaunch=======withdraw", "Event failed to be sent:\n" +

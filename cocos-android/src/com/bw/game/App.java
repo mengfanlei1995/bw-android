@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.bw.appsflyer.AppsflyerHelper;
 import com.bw.appsflyer.IInitEvent;
-import com.bw.facebook.FacebookHelper;
+//import com.bw.facebook.FacebookHelper;
 import com.bw.game.manager.ActivityLifeCycle;
 import com.bw.game.util.PhoneUtil;
 import com.meituan.android.walle.ChannelInfo;

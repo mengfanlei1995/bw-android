@@ -348,61 +348,61 @@ public class PhoneUtil {
                 location.put("longitude", String.valueOf(_location.getLongitude()));
             }*/
 
-        //获取地理位置管理器
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        //获取所有可用的位置提供器
-        List<String> providers = locationManager.getProviders(true);
-        if (providers == null) {
-            return retJson;
-        }
-
-        //获取Location
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return retJson;
-        }
-        //对提供者进行排序，gps、net、passive
-        List<String> providerSortList = new ArrayList<>();
-        if (providers.contains(LocationManager.GPS_PROVIDER)) {
-            //Log.d(TAG, "jswrapper:GPS_PROVIDER");
-            providerSortList.add(LocationManager.GPS_PROVIDER);
-        }
-        if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
-            //Log.d(TAG, "jswrapper:NETWORK_PROVIDER");
-            providerSortList.add(LocationManager.NETWORK_PROVIDER);
-        }
-        if (providers.contains(LocationManager.PASSIVE_PROVIDER)) {
-            //Log.d(TAG, "jswrapper:PASSIVE_PROVIDER");
-            providerSortList.add(LocationManager.PASSIVE_PROVIDER);
-        }
-        try {
-            JSONObject localJson = new JSONObject();
-            for (int i = 0; i < providerSortList.size(); i++) {
-                String provider = providerSortList.get(i);
-                //Log.d(TAG, "jswrapper:正在尝试：" + provider);
-                Location location = locationManager.getLastKnownLocation(provider);
-                if (location != null) {
-                    //Log.d(TAG, "jswrapper:定位成功：" + provider + "-" + location.getLatitude() + "-" + location.getLongitude() );
-                    localJson.put("latitude", String.valueOf(location.getLatitude()));
-                    localJson.put("longitude", String.valueOf(location.getLongitude()));
-                    break;
-                } else {
-                    //Log.d(TAG, "jswrapper:定位失败：" + provider);
-                }
-            }
-            //Log.d(TAG, "jswrapper:定位成功后的值：" + localJson.toString());
-            retJson = localJson.toString();
-        } catch (JSONException e) {
-
-        }
+//        //获取地理位置管理器
+//        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+//        //获取所有可用的位置提供器
+//        List<String> providers = locationManager.getProviders(true);
+//        if (providers == null) {
+//            return retJson;
+//        }
+//
+//        //获取Location
+//        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return retJson;
+//        }
+//        //对提供者进行排序，gps、net、passive
+//        List<String> providerSortList = new ArrayList<>();
+//        if (providers.contains(LocationManager.GPS_PROVIDER)) {
+//            //Log.d(TAG, "jswrapper:GPS_PROVIDER");
+//            providerSortList.add(LocationManager.GPS_PROVIDER);
+//        }
+//        if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+//            //Log.d(TAG, "jswrapper:NETWORK_PROVIDER");
+//            providerSortList.add(LocationManager.NETWORK_PROVIDER);
+//        }
+//        if (providers.contains(LocationManager.PASSIVE_PROVIDER)) {
+//            //Log.d(TAG, "jswrapper:PASSIVE_PROVIDER");
+//            providerSortList.add(LocationManager.PASSIVE_PROVIDER);
+//        }
+//        try {
+//            JSONObject localJson = new JSONObject();
+//            for (int i = 0; i < providerSortList.size(); i++) {
+//                String provider = providerSortList.get(i);
+//                //Log.d(TAG, "jswrapper:正在尝试：" + provider);
+//                Location location = locationManager.getLastKnownLocation(provider);
+//                if (location != null) {
+//                    //Log.d(TAG, "jswrapper:定位成功：" + provider + "-" + location.getLatitude() + "-" + location.getLongitude() );
+//                    localJson.put("latitude", String.valueOf(location.getLatitude()));
+//                    localJson.put("longitude", String.valueOf(location.getLongitude()));
+//                    break;
+//                } else {
+//                    //Log.d(TAG, "jswrapper:定位失败：" + provider);
+//                }
+//            }
+//            //Log.d(TAG, "jswrapper:定位成功后的值：" + localJson.toString());
+//            retJson = localJson.toString();
+//        } catch (JSONException e) {
+//
+//        }
         return retJson;
     }
 
@@ -412,21 +412,21 @@ public class PhoneUtil {
      * @return
      */
     public static String getSimId() {
-        SubscriptionManager mSubscriptionManager = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-            mSubscriptionManager = SubscriptionManager.from(context);
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                return "";
-            }
-            List<SubscriptionInfo> mSubInfoList = mSubscriptionManager.getActiveSubscriptionInfoList();
-            if (mSubInfoList != null) {
-                for (SubscriptionInfo info : mSubInfoList) {
-                    if (null != info) {
-                        return info.getIccId();
-                    }
-                }
-            }
-        }
+//        SubscriptionManager mSubscriptionManager = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+//            mSubscriptionManager = SubscriptionManager.from(context);
+//            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                return "";
+//            }
+//            List<SubscriptionInfo> mSubInfoList = mSubscriptionManager.getActiveSubscriptionInfoList();
+//            if (mSubInfoList != null) {
+//                for (SubscriptionInfo info : mSubInfoList) {
+//                    if (null != info) {
+//                        return info.getIccId();
+//                    }
+//                }
+//            }
+//        }
         return "";
     }
 

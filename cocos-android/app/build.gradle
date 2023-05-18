@@ -172,8 +172,8 @@ dependencies {
     implementation fileTree(dir: COCOS2D_X_PATH + "/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
     implementation project(':libAppsflyer')
-    implementation project(':libFacebook')
-    implementation 'com.facebook.android:facebook-share:16.0.1'
+//    implementation project(':libFacebook')
+//    implementation 'com.facebook.android:facebook-share:16.0.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
 //    implementation platform('com.google.firebase:firebase-bom:30.0.1')
@@ -181,5 +181,5 @@ dependencies {
     implementation 'com.meituan.android.walle:library:1.1.7'
 //    implementation 'com.google.android.gms:play-services-ads:20.2.0'
 //    implementation 'com.google.android.gms:play-services-ads:22.0.0'
-    //implementation 'com.tencent.bugly:crashreport:latest.release'
+//    implementation 'com.tencent.bugly:crashreport:latest.release'
 }
