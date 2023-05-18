@@ -169,7 +169,7 @@ public class PhoneUtil {
                 reportJson.put("os_name", "Android");
                 reportJson.put("app_version", getVersionName());
                 reportJson.put("app_package_name", getPackageName());
-                reportJson.put("android_id", getAndroidId());
+//                reportJson.put("android_id", getAndroidId());
                 reportJson.put("mac", getMacAddress());
                 reportJson.put("oaid", "");
                 reportJson.put("apkVersion", getVersionName());
@@ -437,27 +437,27 @@ public class PhoneUtil {
      */
     public static String getIMEI() {
         String imei = "";
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return imei;
-        }
-        try {
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {// android 8 即以后建议用getImei 方法获取
-                Method method = null;
-                method = tm.getClass().getMethod("getImei", int.class);
-                imei = (String) method.invoke(tm, 0);
-                if (TextUtils.isEmpty(imei)) {
-                    imei = (String) method.invoke(tm, 1);
-                }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0的系统如果想获取MEID/IMEI1/IMEI2
-                imei = getSystemPropertyByReflect("ril.gsm.imei");
-
-            } else {//5.0以下获取imei/meid只能通过 getDeviceId  方法去取
-                imei = tm.getDeviceId();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            return imei;
+//        }
+//        try {
+//            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {// android 8 即以后建议用getImei 方法获取
+//                Method method = null;
+//                method = tm.getClass().getMethod("getImei", int.class);
+//                imei = (String) method.invoke(tm, 0);
+//                if (TextUtils.isEmpty(imei)) {
+//                    imei = (String) method.invoke(tm, 1);
+//                }
+//            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0的系统如果想获取MEID/IMEI1/IMEI2
+//                imei = getSystemPropertyByReflect("ril.gsm.imei");
+//
+//            } else {//5.0以下获取imei/meid只能通过 getDeviceId  方法去取
+//                imei = tm.getDeviceId();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return imei == null ? "" : imei;
     }
 

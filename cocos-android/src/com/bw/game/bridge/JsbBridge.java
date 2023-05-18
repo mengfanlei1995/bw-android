@@ -382,31 +382,31 @@ public class JsbBridge {
      *
      * @param jsonData
      */
-//    public static void shareLink(final String jsonData) {
-//        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
-//        mActivity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    JSONObject json = new JSONObject(jsonData);
-//                    final String platform = json.optString("platform");
-//                    final String url = json.optString("url");
-//                    final String title = json.optString("title");
-//                    if ("facebook".equals(platform)) {
+    public static void shareLink(final String jsonData) {
+        final Activity mActivity = ActivityManager.getInstance().getCurActivity();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject json = new JSONObject(jsonData);
+                    final String platform = json.optString("platform");
+                    final String url = json.optString("url");
+                    final String title = json.optString("title");
+                    if ("facebook".equals(platform)) {
 //                        shareLinkFB(mActivity, title, url);
-//                    } else if ("whatsapp".equals(platform)) {
-//                        shareLinkWhatsApp(title, url);
-//                    } else if ("telegram".equals(platform)) {
-//                        shareMessageTelegram(title, url);
-//                    } else {
-//                        shareLinkSystem(title, url);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
+                    } else if ("whatsapp".equals(platform)) {
+                        shareLinkWhatsApp(title, url);
+                    } else if ("telegram".equals(platform)) {
+                        shareMessageTelegram(title, url);
+                    } else {
+                        shareLinkSystem(title, url);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 //    private static void shareLinkFB(Activity mActivity, String title, String url) {
 //        FacebookHelper.getInstance().shareLink(mActivity, title, url, new IShareListener() {
@@ -656,7 +656,7 @@ public class JsbBridge {
     }
 
     public static String getCid() {
-        return "10102";
+        return "10101";
     }
 
 }

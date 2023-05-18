@@ -146,7 +146,8 @@ public class AppsflyerHelper {
 
                     @Override
                     public void onError(int i, String s) {
-//                        Log.d("afreport===onSuccess", "Event failed to be sent:\n" +
+//                        Log.d("afreport===onError", s);
+//                        Log.d("afreport===onError", "Event failed to be sent:\n" +
 //                                "Error code: " + i + "\n"
 //                                + "Error description: " + s);
                     }
