@@ -77,19 +77,19 @@ public class JsbBridge {
     }
 
     public static void vibrate(String json) {
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            final int time = jsonObject.optInt("time");
-            ActivityManager.getInstance().runAndroidThread(new Runnable() {
-                @Override
-                public void run() {
-                    Vibrator vibrator = (Vibrator) ActivityManager.getInstance().getCurActivity().getSystemService(ActivityManager.getInstance().getCurActivity().VIBRATOR_SERVICE);
-                    vibrator.vibrate(time);
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            JSONObject jsonObject = new JSONObject(json);
+//            final int time = jsonObject.optInt("time");
+//            ActivityManager.getInstance().runAndroidThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Vibrator vibrator = (Vibrator) ActivityManager.getInstance().getCurActivity().getSystemService(ActivityManager.getInstance().getCurActivity().VIBRATOR_SERVICE);
+//                    vibrator.vibrate(time);
+//                }
+//            });
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -642,7 +642,7 @@ public class JsbBridge {
     /**
      * 上报af事件
      *
-     * @jsonData jsonDatap
+     * @jsonData jsonData
      */
     public static void postAfEvent(final String jsonData) {
         try {
