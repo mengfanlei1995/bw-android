@@ -77,19 +77,19 @@ public class JsbBridge {
     }
 
     public static void vibrate(String json) {
-//        try {
-//            JSONObject jsonObject = new JSONObject(json);
-//            final int time = jsonObject.optInt("time");
-//            ActivityManager.getInstance().runAndroidThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Vibrator vibrator = (Vibrator) ActivityManager.getInstance().getCurActivity().getSystemService(ActivityManager.getInstance().getCurActivity().VIBRATOR_SERVICE);
-//                    vibrator.vibrate(time);
-//                }
-//            });
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            final int time = jsonObject.optInt("time");
+            ActivityManager.getInstance().runAndroidThread(new Runnable() {
+                @Override
+                public void run() {
+                    Vibrator vibrator = (Vibrator) ActivityManager.getInstance().getCurActivity().getSystemService(ActivityManager.getInstance().getCurActivity().VIBRATOR_SERVICE);
+                    vibrator.vibrate(time);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -152,7 +152,10 @@ public class JsbBridge {
                 } else if (!clipboardManager.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
 
                 } else {
-                    clipBoardText = clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+                    try {
+                        clipBoardText = clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+                    } catch (Exception e) {
+                    }
                 }
             }
         });
@@ -324,14 +327,19 @@ public class JsbBridge {
         if (!isAppInstalled) {
             appName = "org.telegram.messenger";
         }
-        try {
-            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            intent.setPackage(appName);
-            mActivity.startActivity(intent);
-        } catch (Exception e) {
-            //  没有安装telegram
-            result = null;
-            e.printStackTrace();
+        isAppInstalled = ApkUtil.isAppInstall(mActivity, appName);
+        if (!isAppInstalled) {
+            result = "";
+        } else {
+            try {
+                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                intent.setPackage(appName);
+                mActivity.startActivity(intent);
+            } catch (Exception e) {
+                //  没有安装telegram
+                result = "";
+                e.printStackTrace();
+            }
         }
         return result;
     }
@@ -656,7 +664,7 @@ public class JsbBridge {
     }
 
     public static String getCid() {
-        return "10101";
+        return "10102";
     }
 
 }
